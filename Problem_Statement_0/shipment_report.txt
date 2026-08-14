@@ -1,0 +1,5 @@
+Total Shipment Weight: 325
+Average Container Weight: 65.0
+Heaviest Container: 120
+Lightest Container: 30
+Classification: Heavy
