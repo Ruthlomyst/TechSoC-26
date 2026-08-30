@@ -1,0 +1,7 @@
+Initial population: 5
+Final population: 8
+Peak population: 8
+Final grid: 
+###
+#.#
+###
