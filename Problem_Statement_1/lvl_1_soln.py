@@ -1,17 +1,21 @@
-def input_grid(R, C):
+def input_grid():
     i_pop = 0
-    # Defining the grid
-    grid = [[] * R for c in range(C)]
+    with open("PS_1//input.txt", "r") as f:
+        first_line =  f.readline().strip()
+        R, C = int(first_line[0]), int(first_line[2])
+        G = int(f.readline())
 
-    # Taking input from grid.txt file and copying into grid
-    with open("PS_1\\grid.txt", "r") as f:
-        for r, line in enumerate(f):
-            for char in line.strip():
-                grid[r].append(char)
+        # Defining the grid
+        grid = [[] * C for r in range(R)]
 
-                # Counting initial population
-                if char == "#":
-                    i_pop += 1
+        # Taking input from grid.txt file and copying into grid
+        for r, line in enumerate(f.readlines()):
+                    for char in line.strip():
+                        grid[r].append(char)
+        
+                        # Counting initial population
+                        if char == "#":
+                            i_pop += 1
 
     """
     for r in range(R):
@@ -26,7 +30,7 @@ def input_grid(R, C):
 
     print(f"Initial popuation: {i_pop}")
     """
-    return grid, i_pop
+    return R, C, G, grid, i_pop
 
 
 def neighbours_list(grid, r, c, R, C):
@@ -58,11 +62,7 @@ def writing_output(grid, population): # writing output to o_grid.txt file
     exit()
 
 
-R = int(input("Enter grid rows: "))
-C = int(input("Enter grid columns: "))
-G = int(input("Enter number of generations to simulate: "))
-
-grid, i_pop = input_grid(R, C)
+R, C, G, grid, i_pop = input_grid()
 
 while G > 0:
     grid_copy = [list(row) for row in grid]
