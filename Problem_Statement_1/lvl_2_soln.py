@@ -62,12 +62,44 @@ def writing_output(grid, population): # writing output to o_grid.txt file
     exit()
 
 
+def metrics(grid):
+    for i, lst in enumerate(grid):
+        for j, char in enumerate(lst):
+            if char == "#":
+                r_of_live_cells.append(i)
+                c_of_live_cells.append(j)
+
+    if not r_of_live_cells:
+        print("Live Cells: 0")
+        print("Bounding Box: 0 x 0")
+        print("Center of Mass: N/A")
+
+        return
+
+    #Bounding Box
+    N = len(r_of_live_cells)
+    H = max(r_of_live_cells) + min(r_of_live_cells) + 1
+    W = max(c_of_live_cells) + min(c_of_live_cells) + 1
+    center_r = sum(r_of_live_cells) / N
+    center_c = sum(c_of_live_cells) / N
+
+    print(f"Live cells: {N}")
+    print(f"Bounding Box: {H} x {W} (Rows 0-{H-1}, Cols 0-{W-1})")
+    print(f"Center of Mass: ({center_r:.2f}, {center_c:.2f})")
+
 R, C, G, mode, grid, i_pop = input_grid()
+
+if mode.strip() == "metrics":
+    r_of_live_cells = []
+    c_of_live_cells = []
+    metrics(grid)
+
 
 while G > 0:
     grid_copy = [list(row) for row in grid]
     population = [i_pop]
     pop = 0
+
     for i, r in enumerate(grid):
         for j, c in enumerate(r):
             # Making a list of neighbours to count "#" and "."
@@ -77,6 +109,7 @@ while G > 0:
             for n in n_lst:
                 if n == "#":
                     alive += 1
+
 
             # Conditions for Game of Life
             if c == "#" and (alive > 3 or alive < 2):
@@ -93,8 +126,10 @@ while G > 0:
 
     # Again copying back into grid
     grid = [list(row) for row in grid_copy]
-    G -= 1
+    
 
     # sending final grid for output
     if G == 0:
         writing_output(grid, population)
+
+    G -= 1
